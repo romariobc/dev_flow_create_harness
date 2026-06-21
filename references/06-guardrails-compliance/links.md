@@ -1,6 +1,6 @@
 # links.md — Guardrails & Compliance
 
-Fontes sobre segurança de LLM, normas internacionais de risco em IA e regulação brasileira (LGPD/ANVISA). Base direta de `04-guardrails-seguranca/checklist-seguranca-llm.md`, `04-guardrails-seguranca/dados-sensiveis-saude.md` e `04-guardrails-seguranca/o-que-nunca-fazer.md`.
+Fontes sobre segurança de LLM, normas internacionais de risco em IA e regulação brasileira (LGPD/ANVISA). Base direta de `04-guardrails-seguranca/checklist-seguranca-llm.md`, `04-guardrails-seguranca/dados-sensiveis-por-dominio.md` e `04-guardrails-seguranca/o-que-nunca-fazer.md`.
 
 ## Bibliotecas de guardrails
 
@@ -16,7 +16,7 @@ Fontes sobre segurança de LLM, normas internacionais de risco em IA e regulaç�
 
 ## Regulação brasileira (contexto de saúde/farmácia do Romário)
 
-- [ANPD — Autoridade Nacional de Proteção de Dados (gov.br)](https://www.gov.br/anpd/pt-br) — autoridade responsável por fiscalizar a LGPD no Brasil; fonte oficial para qualquer decisão de minimização/anonimização de dado pessoal descrita em `dados-sensiveis-saude.md`.
+- [ANPD — Autoridade Nacional de Proteção de Dados (gov.br)](https://www.gov.br/anpd/pt-br) — autoridade responsável por fiscalizar a LGPD no Brasil; fonte oficial para qualquer decisão de minimização/anonimização de dado pessoal descrita em `dados-sensiveis-por-dominio.md`.
 - [ANVISA — RDC 657/2022 (Software como Dispositivo Médico) — Perguntas e Respostas](https://www.gov.br/anvisa/pt-br/assuntos/noticias-anvisa/2022/software-como-dispositivo-medico-perguntas-e-respostas) — norma que regula softwares com finalidade diagnóstica/terapêutica/de monitoramento como dispositivo médico (SaMD); relevante se qualquer funcionalidade de IA do harness avançar para sugestão de conduta clínica ou análise de sintomas (ver nota abaixo).
 
 > **Nota importante (lacuna regulatória):** até a data de pesquisa, a ANVISA **não tem norma específica para IA** em produtos de saúde — a RDC 657/2022 foi desenhada para software "estático" e não cobre integralmente sistemas que se reconfiguram com dados do mundo real (aprendizado contínuo). Avaliar caso a caso se uma funcionalidade do projeto se classifica como SaMD antes de assumir que está fora do escopo regulatório.

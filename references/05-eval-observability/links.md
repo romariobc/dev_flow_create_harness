@@ -5,7 +5,7 @@ Fontes sobre avaliação de LLMs/agentes e observabilidade em produção. Substa
 ## Plataformas de observabilidade/tracing
 
 - [LangSmith — Observability Docs](https://docs.langchain.com/langsmith/observability) — plataforma da LangChain para tracing, datasets de avaliação e LLM-as-judge; integra nativamente com LangGraph (stack padrão do harness) mas também com SDKs de outros provedores.
-- [Langfuse — Docs](https://langfuse.com/docs) — plataforma open-source de observabilidade/eval/prompt management, auto-hospedável; alternativa ao LangSmith quando self-hosting é requisito (relevante para dados de saúde, ver `04-guardrails-seguranca/dados-sensiveis-saude.md`).
+- [Langfuse — Docs](https://langfuse.com/docs) — plataforma open-source de observabilidade/eval/prompt management, auto-hospedável; alternativa ao LangSmith quando self-hosting é requisito (relevante para dado pessoal sensível de qualquer domínio, ver `04-guardrails-seguranca/dados-sensiveis-por-dominio.md`).
 - [Braintrust — Docs](https://www.braintrust.dev/docs) — plataforma de eval com foco em CI/CD (evals automáticos em pull requests) e scorers prontos (biblioteca `autoevals`).
 - [OpenTelemetry — Docs](https://opentelemetry.io/docs/) — framework vendor-neutral de instrumentação (traces/métricas/logs); referência quando o projeto precisa de observabilidade que não fique presa a um único fornecedor de LLM-ops.
 
