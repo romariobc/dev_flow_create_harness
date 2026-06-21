@@ -1,4 +1,4 @@
-# Cowork_dev_flow_criate
+# Cowork_dev_flow_create
 
 Espaço de trabalho raiz do projeto **dev_flow_criate**: um framework de desenvolvimento de software assistido por IA, com foco em engenharia de contexto, harness, governança, guardrails e evals.
 
