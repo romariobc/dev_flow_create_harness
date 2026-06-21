@@ -1,0 +1,13 @@
+{
+  "_comment": "Modelo de feature_list.json. Copie esta estrutura e substitua os exemplos pelas features reais do projeto. Status válidos: todo, in_progress, blocked, done. Uma feature só pode virar done depois que o critério de aceite referenciado passar de fato, com prova executável — ver dev-flow-harness/05-harness-evals/criterios-aceite-padrao.md e ciclo-de-sessao.md.",
+  "features": [
+    {
+      "id": "F001",
+      "titulo": "<nome curto da primeira feature>",
+      "status": "todo",
+      "criterio_de_aceite": "<referência ao critério específico, ex: evals/casos-especificos.md#F001, ou um critério funcional padrão de criterios-aceite-padrao.md>",
+      "depende_de": [],
+      "observacoes": ""
+    }
+  ]
+}

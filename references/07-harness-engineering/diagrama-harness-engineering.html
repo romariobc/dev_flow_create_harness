@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Harness Engineering — Mapa Visual Interativo</title>
+<style>
+  :root{
+    --bg:#0f1115; --panel:#171a21; --panel2:#1d212b; --border:#2a2f3a;
+    --text:#e8e9ed; --muted:#9aa0ad; --accent:#5da9ff; --accent2:#6ad1a8;
+    --warn:#f0a23c; --pink:#e07ab0; --purple:#9f8fef; --coral:#e8754f;
+  }
+  *{box-sizing:border-box;}
+  body{
+    background:var(--bg); color:var(--text); font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+    margin:0; padding:32px 20px 80px; line-height:1.6;
+  }
+  .wrap{max-width:980px; margin:0 auto;}
+  h1{font-size:26px; font-weight:600; margin:0 0 6px;}
+  .sub{color:var(--muted); font-size:14px; margin:0 0 36px;}
+  h2{font-size:19px; font-weight:600; margin:48px 0 6px; display:flex; align-items:center; gap:10px;}
+  h2 .tag{font-size:11px; font-weight:600; color:var(--bg); background:var(--accent); padding:3px 9px; border-radius:20px;}
+  .lead{color:var(--muted); font-size:14px; margin:0 0 22px; max-width:760px;}
+
+  /* Ladder */
+  .ladder{display:flex; gap:14px; flex-wrap:wrap;}
+  .rung{
+    flex:1; min-width:220px; background:var(--panel); border:1px solid var(--border); border-radius:14px;
+    padding:18px 18px 16px; cursor:pointer; transition:.15s; position:relative;
+  }
+  .rung:hover{border-color:var(--accent); transform:translateY(-2px);}
+  .rung .n{font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:.06em;}
+  .rung h3{font-size:16px; margin:6px 0 8px;}
+  .rung p{font-size:13px; color:var(--muted); margin:0;}
+  .rung .detail{display:none; font-size:13px; color:var(--text); margin-top:10px; padding-top:10px; border-top:1px dashed var(--border);}
+  .rung.open .detail{display:block;}
+  .arrow{display:flex; align-items:center; color:var(--muted); font-size:20px; padding:0 2px;}
+
+  /* Subsystems grid */
+  .grid5{display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:12px;}
+  .card{
+    background:var(--panel); border:1px solid var(--border); border-radius:12px; padding:16px;
+    cursor:pointer; transition:.15s;
+  }
+  .card:hover{border-color:var(--c, var(--accent));}
+  .card.active{border-color:var(--c, var(--accent)); background:var(--panel2);}
+  .card .icon{width:30px; height:30px; border-radius:8px; background:var(--c, var(--accent)); opacity:.18; margin-bottom:10px;}
+  .card h4{font-size:14px; margin:0 0 4px;}
+  .card p{font-size:12px; color:var(--muted); margin:0;}
+  .detailbox{
+    margin-top:16px; background:var(--panel2); border:1px solid var(--border); border-left:4px solid var(--accent);
+    border-radius:10px; padding:18px 20px; font-size:13.5px; display:none;
+  }
+  .detailbox.show{display:block;}
+  .detailbox b{color:var(--text);}
+  .detailbox .map{display:inline-block; margin-top:10px; font-size:12px; color:var(--accent2); background:rgba(106,209,168,.1); padding:4px 10px; border-radius:6px;}
+
+  /* Multi-agent evolution */
+  .evo{display:flex; gap:10px; align-items:stretch; flex-wrap:wrap;}
+  .evo .stage{flex:1; min-width:200px; background:var(--panel); border:1px solid var(--border); border-radius:12px; padding:16px;}
+  .evo .stage h4{font-size:13px; margin:0 0 10px; color:var(--muted); text-transform:uppercase; letter-spacing:.05em;}
+  .evo .stage .agent{background:var(--panel2); border:1px solid var(--border); border-radius:8px; padding:7px 10px; font-size:12.5px; margin-bottom:6px;}
+  .metrics{display:flex; gap:14px; margin-top:36px; flex-wrap:wrap;}
+  .metric{flex:1; min-width:150px; background:var(--panel); border:1px solid var(--border); border-radius:12px; padding:16px; text-align:center;}
+  .metric .v{font-size:22px; font-weight:600;}
+  .metric .l{font-size:12px; color:var(--muted); margin-top:2px;}
+  .metric.bad .v{color:var(--coral);}
+  .metric.good .v{color:var(--accent2);}
+
+  /* Matrix */
+  .matrix{display:grid; grid-template-columns:120px 1fr 1fr; grid-template-rows:auto 1fr 1fr; gap:8px; margin-top:10px;}
+  .matrix .lbl{display:flex; align-items:center; justify-content:center; font-size:12px; color:var(--muted); text-align:center; padding:6px;}
+  .matrix .cell{background:var(--panel); border:1px solid var(--border); border-radius:10px; padding:14px; cursor:pointer; font-size:12.5px;}
+  .matrix .cell:hover{border-color:var(--accent);}
+  .matrix .cell b{display:block; font-size:13px; margin-bottom:4px;}
+  .matrix .cell .ex{display:none; margin-top:8px; color:var(--muted); font-size:12px;}
+  .matrix .cell.open .ex{display:block;}
+
+  footer{margin-top:60px; padding-top:20px; border-top:1px solid var(--border); font-size:12px; color:var(--muted);}
+  footer a{color:var(--accent);}
+  code{background:var(--panel2); padding:1px 6px; border-radius:5px; font-size:12px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>Harness Engineering — mapa visual interativo</h1>
+  <p class="sub">Clique nos elementos para expandir. Acompanha <code>sintese-conceitual.md</code> — fontes completas em <code>links.md</code>.</p>
+
+  <h2>1. A escada de três camadas <span class="tag">Milvus</span></h2>
+  <p class="lead">Prompt engineering, context engineering e harness engineering não competem entre si — são uma progressão. Cada camada amplia o alcance da anterior.</p>
+  <div class="ladder" id="ladder">
+    <div class="rung" data-i="0" style="--c:var(--purple)">
+      <div class="n">Camada 1</div>
+      <h3>Prompt engineering</h3>
+      <p>O que você diz ao modelo</p>
+      <div class="detail">Escopo: uma única troca (um turno). Otimiza o conteúdo da pergunta — few-shot, chain-of-thought, formatação. Não tem alcance sobre o que acontece na sessão seguinte.</div>
+    </div>
+    <div class="arrow">→</div>
+    <div class="rung" data-i="1" style="--c:var(--accent)">
+      <div class="n">Camada 2</div>
+      <h3>Context engineering</h3>
+      <p>O que o modelo consegue ver</p>
+      <div class="detail">Escopo: a janela de contexto. Otimiza retrieval, compressão de histórico, o que entra e o que é descartado do contexto disponível.</div>
+    </div>
+    <div class="arrow">→</div>
+    <div class="rung" data-i="2" style="--c:var(--accent2)">
+      <div class="n">Camada 3</div>
+      <h3>Harness engineering</h3>
+      <p>O mundo em que o agente opera</p>
+      <div class="detail">Escopo: execução autônoma de horas, várias sessões. Ferramentas, lógica de validação, restrições arquiteturais, ciclo de vida da sessão. É aqui que "concluído" passa a significar algo verificável.</div>
+    </div>
+  </div>
+
+  <h2>2. Os 5 subsistemas de um harness <span class="tag">walkinglabs</span></h2>
+  <p class="lead">Clique em cada subsistema para ver o que ele faz e onde mapeia em <code>dev-flow-harness/</code>.</p>
+  <div class="grid5" id="subsystems">
+    <div class="card" data-i="0" style="--c:var(--purple)"><div class="icon"></div><h4>Instructions</h4><p>O que fazer, em que ordem</p></div>
+    <div class="card" data-i="1" style="--c:var(--accent)"><div class="icon"></div><h4>State</h4><p>O que já foi feito</p></div>
+    <div class="card" data-i="2" style="--c:var(--accent2)"><div class="icon"></div><h4>Verification</h4><p>Só prova executável conta</p></div>
+    <div class="card" data-i="3" style="--c:var(--warn)"><div class="icon"></div><h4>Scope</h4><p>Uma feature por vez</p></div>
+    <div class="card" data-i="4" style="--c:var(--pink)"><div class="icon"></div><h4>Session lifecycle</h4><p>Início, fim, handoff</p></div>
+  </div>
+  <div class="detailbox" id="subdetail"></div>
+
+  <h2>3. Evolução multi-agente <span class="tag">Anthropic</span></h2>
+  <p class="lead">Um único agente que se autoavalia tende a ser tendencioso a favor do próprio trabalho. A correção, inspirada em GANs, é separar arquiteturalmente quem gera de quem avalia.</p>
+  <div class="evo">
+    <div class="stage">
+      <h4>Solo</h4>
+      <div class="agent">1 agente faz tudo: escreve, decide se está bom, declara concluído</div>
+    </div>
+    <div class="stage">
+      <h4>Dois agentes</h4>
+      <div class="agent">Initializer — configura ambiente, feature list, git</div>
+      <div class="agent">Coding agent — avança incrementalmente sessão após sessão</div>
+    </div>
+    <div class="stage">
+      <h4>Três agentes</h4>
+      <div class="agent">Planner — especifica o produto</div>
+      <div class="agent">Generator — implementa (assina "contrato de sprint")</div>
+      <div class="agent">Evaluator — testa com Playwright como um usuário real</div>
+    </div>
+  </div>
+  <p class="lead" style="margin-top:14px">Experimento controlado (mesmo modelo, mesma tarefa — "construa um editor de jogo retrô 2D"):</p>
+  <div class="metrics">
+    <div class="metric bad"><div class="v">US$ 9</div><div class="l">sem harness, 20 min — quebrado</div></div>
+    <div class="metric good"><div class="v">US$ 200</div><div class="l">harness de 3 agentes, 6h — jogável</div></div>
+  </div>
+
+  <h2>4. Feedforward × feedback, computacional × inferencial <span class="tag">Böckeler / Fowler</span></h2>
+  <p class="lead">Clique em cada célula para ver um exemplo concreto.</p>
+  <div class="matrix" id="matrix">
+    <div></div>
+    <div class="lbl">Feedforward (antes de agir)</div>
+    <div class="lbl">Feedback (depois de agir)</div>
+    <div class="lbl">Computacional</div>
+    <div class="cell" data-k="0"><b>Scaffolding</b>Templates de arquivo, restrições de escopo automatizadas<div class="ex">Ex.: gerador de boilerplate que só permite criar arquivo dentro da camada permitida.</div></div>
+    <div class="cell" data-k="1"><b>Testes e CI</b>Determinístico — você sabe exatamente por que passou ou falhou<div class="ex">Ex.: suíte de testes, lint, type-check, smoke run.</div></div>
+    <div class="lbl">Inferencial</div>
+    <div class="cell" data-k="2"><b>AGENTS.md</b>Instruções em linguagem natural, exemplos-guia<div class="ex">Ex.: convenções de nomenclatura, decisões de arquitetura explicadas em texto.</div></div>
+    <div class="cell" data-k="3"><b>LLM-as-judge</b>Avaliação semântica por outro modelo<div class="ex">Ex.: Evaluator agent que julga se a UI "parece" correta usando critério em linguagem natural.</div></div>
+  </div>
+
+  <footer>
+    Fontes completas em <code>links.md</code> · síntese didática completa em <code>sintese-conceitual.md</code> · parte de <b>dev_flow_criate Harness</b>.
+  </footer>
+</div>
+
+<script>
+  document.querySelectorAll('#ladder .rung').forEach(el=>{
+    el.addEventListener('click',()=>el.classList.toggle('open'));
+  });
+
+  const subData = [
+    {
+      title:'Instructions',
+      body:'Dizem ao agente o que fazer, em que ordem, e o que ler antes de começar — como um <b>mapa</b>, não uma enciclopédia. O erro mais comum: um único arquivo gigante com toda regra. A correção (OpenAI): reduzir o arquivo principal a ~100 linhas que apontam para uma pasta <code>docs/</code> navegável sob demanda. Princípio: se algo não está no contexto em tempo de execução, ele não existe para o agente.',
+      map:'Mapeia para: 01-identidade-memoria/ e 03-convencoes-padroes/'
+    },
+    {
+      title:'State',
+      body:'Rastreia o que já foi feito, o que está em andamento, o que vem a seguir — persistido em disco, não na memória da conversa. Sem isso, toda sessão nova começa do zero. Templates: <code>feature_list.json</code> (status de features) e <code>claude-progress.md</code> (diário de sessão).',
+      map:'Mapeia para: 05-harness-evals/estado-e-progresso.md (promovido em 2026-06-21)'
+    },
+    {
+      title:'Verification',
+      body:'Só uma suíte de testes passando conta como evidência. O agente não pode declarar vitória sem prova executável (testes, lint, type-check, smoke run). É o subsistema mais citado como o que mais falta na prática — o mais fácil de pular sob pressão, e o mais fácil de "simular" verbalmente.',
+      map:'Mapeia para: 05-harness-evals/'
+    },
+    {
+      title:'Scope',
+      body:'Restringe o agente a uma feature por vez. Sem isso, agentes "overreach" — tentam várias coisas ao mesmo tempo, terminam nenhuma por completo, e às vezes reescrevem a própria lista de features para esconder trabalho inacabado.',
+      map:'Mapeia para: 02-dominio-arquitetura/'
+    },
+    {
+      title:'Session lifecycle',
+      body:'Inicializa no começo (<code>init.sh</code> — instala, verifica saúde do ambiente), limpa no final, deixa um caminho de reinício claro para a próxima sessão. A diferença visual entre sem-harness e com-harness é mais marcante neste subsistema: sem ele, cada sessão começa do zero e refaz trabalho.',
+      map:'Mapeia para: 05-harness-evals/ciclo-de-sessao.md (promovido em 2026-06-21)'
+    }
+  ];
+  const subBox = document.getElementById('subdetail');
+  document.querySelectorAll('#subsystems .card').forEach(el=>{
+    el.addEventListener('click',()=>{
+      const i = +el.dataset.i;
+      const already = el.classList.contains('active');
+      document.querySelectorAll('#subsystems .card').forEach(c=>c.classList.remove('active'));
+      if(already){ subBox.classList.remove('show'); return; }
+      el.classList.add('active');
+      const d = subData[i];
+      subBox.innerHTML = '<b>'+d.title+'</b><br><br>'+d.body+'<br><span class="map">'+d.map+'</span>';
+      subBox.classList.add('show');
+    });
+  });
+
+  document.querySelectorAll('#matrix .cell').forEach(el=>{
+    el.addEventListener('click',()=>el.classList.toggle('open'));
+  });
+</script>
+</body>
+</html>
