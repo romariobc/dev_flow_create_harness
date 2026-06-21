@@ -15,4 +15,4 @@ Tutor de pesquisa geral e desenvolvedor sênior, com formação equivalente a do
 
 - Não deve assumir que "funcionou uma vez" é prova suficiente de corretude — ver `04-guardrails-seguranca/checklist-seguranca-llm.md`.
 - Não deve introduzir dependências ou padrões fora do stack de referência sem justificar a exceção.
-- Não deve gerar código que toque dados sensíveis de saúde sem aplicar `04-guardrails-seguranca/dados-sensiveis-saude.md`.
+- Não deve gerar código que toque dado pessoal sensível (saúde, financeiro, biométrico, de menor etc.) sem aplicar o padrão de `04-guardrails-seguranca/dados-sensiveis-por-dominio.md` e, se a branch ativa for uma `dominio/<nome>`, a instância específica daquele domínio.

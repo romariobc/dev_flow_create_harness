@@ -23,4 +23,4 @@ Aplicar antes de considerar qualquer feature que envolva um LLM como "pronta".
 - [ ] Todo agente com loop (LangGraph) tem um limite máximo de iterações/chamadas, para evitar loops infinitos ou custo descontrolado.
 - [ ] Ações irreversíveis (deletar, enviar, publicar, transferir) nunca são executadas automaticamente por um agente sem confirmação explícita de um humano.
 
-Ver também `dados-sensiveis-saude.md` para guardrails específicos de dados de saúde, e `o-que-nunca-fazer.md` para a lista de proibições explícitas deste harness.
+Ver também `dados-sensiveis-por-dominio.md` para o padrão de guardrails de dado sensível por domínio, e `o-que-nunca-fazer.md` para a lista de proibições explícitas deste harness.

@@ -5,7 +5,7 @@ Espaço de trabalho raiz do projeto **dev_flow_criate**: um framework de desenvo
 ## O que tem aqui
 
 - **`references/`** — pesquisa e teoria: artigos, ebooks e sínteses lidos sobre o tema, sem compromisso de uso. É a camada do "porquê".
-- **`dev-flow-harness/`** — o harness global: regras, convenções, guardrails e critérios de avaliação reutilizáveis em qualquer projeto seu. É a fonte de verdade que não muda de projeto para projeto.
+- **`dev-flow-harness/`** — o harness global: regras, convenções, guardrails e critérios de avaliação reutilizáveis em qualquer projeto seu. É a fonte de verdade que não muda de projeto para projeto. A branch `main` é sempre agnóstica de domínio; variações de domínio (saúde, e outros que vierem) vivem em branches `dominio/<nome>` — ver `ARQUITETURA.md`, seção "Variação por domínio: branches".
 - **`projetos/`** — cada subpasta é um projeto real, montado a partir do template de adaptador (`projetos/_template-adapter/`). Cada projeto referencia o harness acima e registra apenas o que é específico dele.
 
 Ver `ARQUITETURA.md` para o modelo completo de três camadas e a regra de quando uma ideia de `references/` pode se tornar regra em `dev-flow-harness/`.

@@ -40,7 +40,35 @@ Uma regra promovida não é permanente por padrão. Se `metricas.md` registrar d
 
 ## Quem decide e onde isso fica registrado
 
-Hoje a decisão é humana (Romário, com ou sem apoio do tutor de IA), registrada em `dev-flow-harness/CHANGELOG.md` — cada promoção vira uma linha: data, conceito, origem em `references/`, destino no harness. Sem esse registro, a auditabilidade que o próprio harness exige de guardrails de dados sensíveis (`04-guardrails-seguranca/dados-sensiveis-saude.md`) não estaria sendo aplicada ao harness sobre si mesmo.
+Hoje a decisão é humana (Romário, com ou sem apoio do tutor de IA), registrada em `dev-flow-harness/CHANGELOG.md` — cada promoção vira uma linha: data, conceito, origem em `references/`, destino no harness. Sem esse registro, a auditabilidade que o próprio harness exige de guardrails de dados sensíveis (`04-guardrails-seguranca/dados-sensiveis-por-dominio.md`) não estaria sendo aplicada ao harness sobre si mesmo.
+
+## Variação por domínio: branches
+
+As duas direções acima descrevem como uma ideia sobe ou desce entre `references/` e `dev-flow-harness/`. Há uma terceira pergunta, lateral às duas: como o mesmo trunk agnóstico serve domínios diferentes (saúde, e outros que vierem) sem que o trunk pare de ser agnóstico?
+
+### A regra
+
+`main` nunca contém conteúdo específico de domínio. Qualquer guardrail, vocabulário ou exemplo que só faz sentido para um domínio (dado de saúde, dado financeiro, etc.) vive em uma branch derivada, nomeada `dominio/<nome>` (ex.: `dominio/saude`). Essa branch:
+
+- parte de `main` e herda 100% do trunk agnóstico;
+- adiciona os arquivos específicos daquele domínio (ex.: `04-guardrails-seguranca/dados-sensiveis-saude.md`, instanciando o padrão de `dados-sensiveis-por-dominio.md`);
+- é onde `projetos/<projeto>/` daquele domínio são de fato criados e evoluem. Dentro da branch de domínio, cada projeto ainda decide sua própria arquitetura concreta (web, mobile, backend, banco de dados etc.) em `context/arquitetura.md`. Plataforma/visão (web, mobile) é detalhe de projeto, não uma camada nova do harness.
+
+### Por que branch, e não uma pasta nova dentro do trunk
+
+A divergência entre domínios é real e duradoura (vocabulário, base legal, exemplos), não uma variação superficial — o mesmo tipo de coisa que o modelo de três camadas já trata como divisão de responsabilidade. Uma pasta nova dentro do trunk (`dev-flow-harness/dominios/saude/`) reintroduziria o problema que motivou esta revisão: conteúdo de domínio morando dentro do que este documento define como "vale para qualquer projeto".
+
+### O custo, e como mitigar
+
+Toda branch de longa duração acumula dívida: uma correção feita em `main` precisa ser propagada manualmente para cada branch de domínio. Mitigação operacional: sempre que uma promoção for registrada em `CHANGELOG.md`, faça merge de `main` em cada branch de domínio ativa antes de continuar trabalhando nela (`git checkout dominio/<nome> && git merge main`). É trabalho real, mas previsível — e bem menor do que o custo de um trunk poluído com conteúdo que a maioria dos projetos nunca vai usar.
+
+### O que não promover a uma branch de domínio
+
+Eixos de variação que são detalhe de projeto, não do domínio, continuam em `projetos/<projeto>/context/`, nunca em uma branch: escolha de frontend (web, mobile, desktop), escolha de banco de dados, escolha entre monolito e microsserviços. Sinal para diferenciar: se a variação tem implicação legal/regulatória ou de vocabulário que se repete entre vários projetos do mesmo assunto, é domínio (branch); se é uma escolha técnica de um projeto específico, é adaptador.
+
+### Não confundir com `context/dominio.md` do projeto
+
+`projetos/<projeto>/context/dominio.md` já existe e documenta o domínio de negócio daquele projeto específico (ex.: regras de uma farmácia, de um hospital). A branch `dominio/<nome>` é uma camada acima: guardrails e vocabulário que valem para TODOS os projetos daquele domínio, não só um. Um projeto de saúde, na branch `dominio/saude`, ainda preenche seu próprio `context/dominio.md` com as regras de negócio específicas dele — as duas coisas convivem, em níveis diferentes de generalidade.
 
 ## O que este documento não resolve
 

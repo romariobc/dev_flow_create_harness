@@ -3,7 +3,7 @@
 ## Quando usar local (Ollama)
 
 - Desenvolvimento e prototipagem rápida, sem custo por chamada.
-- Dados sensíveis que não devem saudavelmente trafegar para um provedor externo (ver `04-guardrails-seguranca/dados-sensiveis-saude.md` — relevante para qualquer projeto que toque dados de saúde).
+- Dados sensíveis que não devem trafegar para um provedor externo sem necessidade (ver `04-guardrails-seguranca/dados-sensiveis-por-dominio.md` — relevante para qualquer projeto que toque uma categoria de dado pessoal com exigência legal própria: saúde, financeiro, biométrico etc.).
 - Cenários offline ou com restrição de conectividade.
 
 ## Quando usar nuvem
