@@ -7,7 +7,7 @@ Fontes sobre provedores de modelo (cloud e local), gateways de inferência, benc
 - [Anthropic — Claude Docs](https://docs.anthropic.com) — documentação oficial da API Claude, usada como referência primária do harness (Anthropic é o provedor padrão assumido nos exemplos).
 - [OpenAI — API Platform Docs](https://platform.openai.com/docs) — documentação oficial da API OpenAI, referência para comparação de capacidades/preços e para projetos que integrem múltiplos provedores.
 - [Google AI for Developers — Gemini API Docs](https://ai.google.dev/docs) — documentação oficial do Gemini, terceiro provedor de referência para estratégias multi-modelo.
-- [Ollama — GitHub](https://github.com/ollama/ollama) — execução local de LLMs; base da nossa estratégia "modelo local para dado sensível" descrita em `04-guardrails-seguranca/dados-sensiveis-saude.md`.
+- [Ollama — GitHub](https://github.com/ollama/ollama) — execução local de LLMs; base da nossa estratégia "modelo local para dado sensível" descrita em `04-guardrails-seguranca/dados-sensiveis-por-dominio.md`.
 
 ## Gateways e abstração multi-provedor
 
