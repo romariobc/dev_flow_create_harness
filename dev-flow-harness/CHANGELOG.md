@@ -4,6 +4,11 @@ Registro de toda promoção de conceito: de `references/` para `dev-flow-harness
 
 Formato de cada entrada: data, conceito, origem, destino, critério que justificou a promoção.
 
+## 2026-06-22
+
+- **Técnica de bootstrap para repositório externo** — origem: decisão de arquitetura desta sessão (SIAD-PrEP tem repo próprio; não faz sentido colapsar projetos externos no trunk). Destino: `projetos/_template-adapter/README.md` (Modo B — instrução operacional completa) + seção nova em `dev-flow-harness/README.md` ("Como instanciar um projeto externo"). Critério: gap real (o template só cobria projetos internos, não havia caminho documentado para repos externos), custo baixo (documentação, sem ferramenta nova), operacionalizável (4 passos concretos: copiar context/, criar CLAUDE.md com URL, registrar no CHANGELOG, abrir PR para promover lições).
+- **Bootstrap SIAD-PrEP** — primeiro projeto externo instanciado com a técnica acima. Repo: `https://github.com/romariobc/SIAD-PrEP` (branch `dominio/saude` do harness como referência). Arquivos criados no SIAD-PrEP: `context/adaptacoes.md` (divergência de stack Node.js/TS vs Python, guardrails LGPD), `context/dominio.md` (domínio PrEP, entidades, papéis, contexto regulatório), `context/arquitetura.md` (decisões MVC, soft delete, Zod, JWT), `context/estado/feature_list.json` (5 features; feature 001 done), `context/estado/progresso.md` (handoff da sessão). CLAUDE.md do SIAD-PrEP atualizado com referência ao harness.
+
 ## 2026-06-21
 
 - **Tipologia de controles (computacional × inferencial)** — origem: `references/07-harness-engineering/sintese-conceitual.md` (distinção de Böckeler/Fowler). Destino: `05-harness-evals/tipologia-controles.md`. Critério: recorrente na fonte teórica, aplicável direto ao stack declarado, operacionalizável como regra de decisão, não duplicava nada existente.
