@@ -1,0 +1,21 @@
+# Camada de pesquisa e estudo — não versionada
+# Conteúdo teórico e ferramentas locais do escritório Cowork
+references/
+
+# Ferramentas e servidores locais
+ferramentas/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.env
+.venv/
+venv/
+
+# Node
+node_modules/
+
+# OS
+.DS_Store
+Thumbs.db
