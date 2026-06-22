@@ -22,14 +22,10 @@ Harness de engenharia de contexto para desenvolvimento assistido por IA. Não é
 
 Python · LangChain · LangGraph · LangSmith · Hugging Face · Ollama
 
-## Branches ativas
+## Estrutura de branches
 
-- `main` — trunk agnóstico (este arquivo e `dev-flow-harness/`)
-- `dominio/saude` — adiciona guardrails de saúde; projetos RAG e assistente de prescrição vivem aqui
-
-## Próximo projeto
-
-`projetos/rag_pcdt_arvs/` na branch `dominio/saude` — RAG sobre PCDTs de ARVs. Ainda não criado; é o primeiro teste de ponta a ponta do harness.
+- `main` — trunk agnóstico; nunca recebe conteúdo específico de domínio
+- `dominio/<nome>` — branches derivadas de `main`; cada uma adiciona guardrails e projetos do seu domínio
 
 ## Documentos-chave
 
